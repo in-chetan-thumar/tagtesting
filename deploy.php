@@ -133,7 +133,7 @@ class Deploy {
 		  echo '<BR> Command:chmod -R og-rx .git '. '<bR>OUTPUT:'.implode(' ', $output);
 		  
 		  // git pull change command
-		  shell_exec('git pull');          
+		  shell_exec('cd /www/cronjobs/tagtesting; git pull');          
 		  echo '<BR><BR>chetan pull command... ';
 		  echo '<BR> Command:git pull '. '<bR>OUTPUT:'.implode(' ', $output);
 
@@ -147,7 +147,7 @@ class Deploy {
 }
 
 // This is just an example
-$deploy = new Deploy('/www/cronjobs/tagtesting/');
+$deploy = new Deploy('/www/cronjobs/tagtesting');
 
 /*$deploy->post_deploy = function() use ($deploy) {
   // hit the wp-admin page to update any db changes
