@@ -111,18 +111,26 @@ class Deploy {
           // Make sure we're in the right directory
           shell_exec('cd '.$this->_directory, $output);
           $this->log('Changing working directory... '.implode(' ', $output));
+		  echo 'Changing working directory... ';
+		  echo '<BR><BR> Command:cd '.$this->_directory .'<bR>OUTPUT:'.implode(' ', $output);
 
           // Discard any changes to tracked files since our last deploy
           shell_exec('git reset --hard HEAD', $output);
           $this->log('Reseting repository... '.implode(' ', $output));
+		  echo 'Reseting repository... ';
+		  echo '<BR><BR> Command:git reset --hard HEAD'.'<bR>OUTPUT:'.implode(' ', $output);
 
           // Update the local repository
           shell_exec('git pull '.$this->_remote.' '.$this->_branch, $output);
           $this->log('Pulling in changes... '.implode(' ', $output));
+		  echo 'Pulling in changes... ';
+		  echo '<BR><BR> Command:git pull '.$this->_remote.' '.$this->_branch .'<bR>OUTPUT:'.implode(' ', $output);
 
           // Secure the .git directory
           shell_exec('chmod -R og-rx .git');
           $this->log('Securing .git directory... ');
+		  echo 'Securing .git directory... ';
+		  echo '<BR><BR> Command:chmod -R og-rx .git '. '<bR>OUTPUT:'.implode(' ', $output);
 
           if (is_callable($this->post_deploy))
           {
@@ -142,11 +150,11 @@ class Deploy {
 // This is just an example
 $deploy = new Deploy('/www/cronjobs/tagtesting/');
 
-$deploy->post_deploy = function() use ($deploy) {
+/*$deploy->post_deploy = function() use ($deploy) {
   // hit the wp-admin page to update any db changes
   //shell_exec('curl http://www.foobar.com/wp-admin/upgrade.php?step=upgrade_db');
   $deploy->log('Updating wordpress database... ');
-};
+};*/
 
 $deploy->execute();
 
