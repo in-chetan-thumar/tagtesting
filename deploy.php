@@ -109,35 +109,34 @@ class Deploy {
       try
       {
           // Make sure we're in the right directory
-          shell_exec('cd '.$this->_directory, $output);
-          $this->log('Changing working directory... '.implode(' ', $output));
+          //shell_exec('cd '.$this->_directory, $output);
+          //$this->log('Changing working directory... '.implode(' ', $output));
 		  echo '<BR><BR>Changing working directory... ';
 		  echo '<br> Command:cd '.$this->_directory .'<bR>OUTPUT:'.implode(' ', $output);
 
           // Discard any changes to tracked files since our last deploy
-          shell_exec('git reset --hard HEAD', $output);
-          $this->log('Reseting repository... '.implode(' ', $output));
+          //shell_exec('git reset --hard HEAD', $output);
+          //$this->log('Reseting repository... '.implode(' ', $output));
 		  echo '<BR><BR>Reseting repository... ';
 		  echo '<BR> Command:git reset --hard HEAD'.'<bR>OUTPUT:'.implode(' ', $output);
 
           // Update the local repository
-          shell_exec('git pull '.$this->_remote.' '.$this->_branch, $output);
-          $this->log('Pulling in changes... '.implode(' ', $output));
+          //shell_exec('git pull '.$this->_remote.' '.$this->_branch, $output);
+          //$this->log('Pulling in changes... '.implode(' ', $output));
 		  echo '<BR><BR>Pulling in changes... ';
 		  echo '<BR> Command:git pull '.$this->_remote.' '.$this->_branch .'<bR>OUTPUT:'.implode(' ', $output);
 
           // Secure the .git directory
-          shell_exec('chmod -R og-rx .git');
-          $this->log('Securing .git directory... ');
+          //shell_exec('chmod -R og-rx .git');
+          //$this->log('Securing .git directory... ');
 		  echo '<BR><BR>Securing .git directory... ';
 		  echo '<BR> Command:chmod -R og-rx .git '. '<bR>OUTPUT:'.implode(' ', $output);
+		  
+		  // git pull change command
+		  shell_exec('git pull');          
+		  echo '<BR><BR>chetan pull command... ';
+		  echo '<BR> Command:git pull '. '<bR>OUTPUT:'.implode(' ', $output);
 
-          if (is_callable($this->post_deploy))
-          {
-              call_user_func($this->post_deploy, $this->_data);
-          }
-
-          $this->log('Deployment successful.');
       }
       catch (Exception $e)
       {
