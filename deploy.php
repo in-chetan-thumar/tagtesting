@@ -109,19 +109,19 @@ class Deploy {
       try
       {
           // Make sure we're in the right directory
-          exec('cd '.$this->_directory, $output);
+          shell_exec('cd '.$this->_directory, $output);
           $this->log('Changing working directory... '.implode(' ', $output));
 
           // Discard any changes to tracked files since our last deploy
-          exec('git reset --hard HEAD', $output);
+          shell_exec('git reset --hard HEAD', $output);
           $this->log('Reseting repository... '.implode(' ', $output));
 
           // Update the local repository
-          exec('git pull '.$this->_remote.' '.$this->_branch, $output);
+          shell_exec('git pull '.$this->_remote.' '.$this->_branch, $output);
           $this->log('Pulling in changes... '.implode(' ', $output));
 
           // Secure the .git directory
-          exec('chmod -R og-rx .git');
+          shell_exec('chmod -R og-rx .git');
           $this->log('Securing .git directory... ');
 
           if (is_callable($this->post_deploy))
@@ -144,7 +144,7 @@ $deploy = new Deploy('/www/cronjobs/tagtesting/');
 
 $deploy->post_deploy = function() use ($deploy) {
   // hit the wp-admin page to update any db changes
-  //exec('curl http://www.foobar.com/wp-admin/upgrade.php?step=upgrade_db');
+  //shell_exec('curl http://www.foobar.com/wp-admin/upgrade.php?step=upgrade_db');
   $deploy->log('Updating wordpress database... ');
 };
 
